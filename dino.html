@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prehistoric Wonders - Fossil Encyclopedia</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <style>
+        
+        
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f5f5f5;
+  color: #333;
+  scroll-behavior: smooth;
+}
+
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+nav a {
+  transition: color 0.3s ease;
+}
+
+.hero {
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url('https://images.unsplash.com/photo-1639322537228-f710d846310a?auto=format&fit=crop&w=1470&q=80');
+  background-size: cover;
+  background-position: center;
+  color: white;
+  text-align: center;
+}
+
+.hero h1 {
+  letter-spacing: 1px;
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+.hero p {
+  max-width: 650px;
+  margin: 0 auto;
+  opacity: 0.9;
+}
+
+.fossil-card {
+  transition: all 0.3s ease;
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+.fossil-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.fossil-card img {
+  transition: transform 0.4s ease;
+}
+
+.fossil-card:hover img {
+  transform: scale(1.05);
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -38px;
+  top: 0;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #d97706;
+  border: 4px solid #fbbf24;
+}
+
+@media (max-width: 768px) {
+  .timeline-item::before {
+    left: -25px;
+  }
+}
+
+button, a.button, .btn {
+  transition: all 0.3s ease;
+}
+
+a.bg-amber-600:hover,
+button.bg-amber-700:hover {
+  filter: brightness(1.1);
+}
+
+footer {
+  background-color: #78350f;
+  color: white;
+  padding: 2rem 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+[data-aos] {
+  transition: all 0.8s ease !important;
+}
+
+#mobileMenu a {
+  display: block;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+#menuBtn {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: #b45309;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #92400e;
+}
+
+body {
+  cursor: url('assets/cursor.png'), auto;
+}
+
+
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-amber-900 text-white shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center space-x-2">
+                <i class="fas fa-bone text-2xl"></i>
+                <a href="#" class="text-2xl font-bold">Prehistoric<span class="text-amber-300">Wonders</span></a>
+            </div>
+            <div class="hidden md:flex space-x-6 items-center">
+                <a href="#home" class="hover:text-amber-300 transition">Home</a>
+                <a href="#fossils" class="hover:text-amber-300 transition">Fossils</a>
+                <a href="#timeline" class="hover:text-amber-300 transition">Timeline</a>
+                <a href="#about" class="hover:text-amber-300 transition">About</a>
+                <div class="flex space-x-2 ml-4">
+                    <button onclick="signInWithGoogle()" class="bg-white text-amber-900 px-3 py-1 rounded hover:bg-gray-100 transition">
+                        <i class="fab fa-google mr-1"></i> Login
+                    </button>
+                    <button onclick="showLoginModal()" class="bg-amber-700 text-white px-3 py-1 rounded hover:bg-amber-800 transition">
+                        <i class="fas fa-user mr-1"></i> Sign Up
+                    </button>
+                </div>
+            </div>
+            <button class="md:hidden text-xl" id="menuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-amber-800 px-4 py-2" id="mobileMenu">
+            <a href="#home" class="block py-2 hover:text-amber-300 transition">Home</a>
+            <a href="#fossils" class="block py-2 hover:text-amber-300 transition">Fossils</a>
+            <a href="#timeline" class="block py-2 hover:text-amber-300 transition">Timeline</a>
+            <a href="#about" class="block py-2 hover:text-amber-300 transition">About</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero text-white py-20 md:py-32" data-aos="fade">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-4">Discover Ancient Life</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Explore the fascinating world of prehistoric creatures through their fossilized remains</p>
+            <a href="#fossils" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded-lg transition inline-block">
+                Explore Fossils <i class="fas fa-arrow-down ml-2"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Featured Fossils -->
+    <section id="fossils" class="py-16 bg-white" data-aos="fade-up">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-amber-900">Featured Prehistoric Creatures</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Fossil Card 1 -->
+<div class="fossil-card bg-white rounded-lg overflow-hidden border border-gray-200" data-aos="zoom-in">
+  <div class="relative h-64 overflow-hidden">
+    <img src="https://raw.githubusercontent.com/Galpinalpito/dino-website/main/assets/trex.jpg" 
+         alt="Tyrannosaurus Rex" class="w-full h-full object-cover">
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+      <h3 class="text-white text-xl font-bold">Tyrannosaurus Rex</h3>
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-3">
+      <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded">Late Cretaceous</span>
+      <span class="text-gray-500 text-sm"><i class="fas fa-ruler-combined mr-1"></i> 12m long</span>
+    </div>
+    <p class="text-gray-700 mb-4">The "king of the tyrant lizards" was one of the largest land predators, with massive jaws and powerful legs.</p>
+    <div class="flex justify-between items-center">
+      <div>
+        <span class="text-gray-500 text-sm"><i class="fas fa-weight-hanging mr-1"></i> 8-14 tons</span>
+      </div>
+      <a href="fossil-details.html?dino=trex" class="text-amber-600 hover:text-amber-800 font-medium">
+        Learn More <i class="fas fa-arrow-right ml-1"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Fossil Card 2 -->
+<div class="fossil-card bg-white rounded-lg overflow-hidden border border-gray-200">
+  <div class="relative h-64 overflow-hidden">
+    <img src="https://raw.githubusercontent.com/Galpinalpito/dino-website/main/assets/triceratops.jpg" 
+         alt="Triceratops" class="w-full h-full object-cover">
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+      <h3 class="text-white text-xl font-bold">Triceratops</h3>
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-3">
+      <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded">Late Cretaceous</span>
+      <span class="text-gray-500 text-sm"><i class="fas fa-ruler-combined mr-1"></i> 9m long</span>
+    </div>
+    <p class="text-gray-700 mb-4">This herbivorous dinosaur is famous for its three horns and large bony frill, possibly used for defense and display.</p>
+    <div class="flex justify-between items-center">
+      <div>
+        <span class="text-gray-500 text-sm"><i class="fas fa-weight-hanging mr-1"></i> 6-12 tons</span>
+      </div>
+      <a href="fossil-details.html?dino=triceratops" class="text-amber-600 hover:text-amber-800 font-medium">
+        Learn More <i class="fas fa-arrow-right ml-1"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Fossil Card 3 -->
+<div class="fossil-card bg-white rounded-lg overflow-hidden border border-gray-200">
+  <div class="relative h-64 overflow-hidden">
+    <img src="https://raw.githubusercontent.com/Galpinalpito/dino-website/main/assets/mammoth.jpg" 
+         alt="Woolly Mammoth" class="w-full h-full object-cover">
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+      <h3 class="text-white text-xl font-bold">Woolly Mammoth</h3>
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-3">
+      <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded">Pleistocene</span>
+      <span class="text-gray-500 text-sm"><i class="fas fa-ruler-combined mr-1"></i> 3.5m tall</span>
+    </div>
+    <p class="text-gray-700 mb-4">Adapted to cold environments with long, curved tusks and a thick coat of fur, these giants roamed during the last Ice Age.</p>
+    <div class="flex justify-between items-center">
+      <div>
+        <span class="text-gray-500 text-sm"><i class="fas fa-weight-hanging mr-1"></i> 6-8 tons</span>
+      </div>
+      <a href="fossil-details.html?dino=mammoth" class="text-amber-600 hover:text-amber-800 font-medium">
+        Learn More <i class="fas fa-arrow-right ml-1"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Fossil Card 4 -->
+<div class="fossil-card bg-white rounded-lg overflow-hidden border border-gray-200">
+  <div class="relative h-64 overflow-hidden">
+    <img src="https://raw.githubusercontent.com/Galpinalpito/dino-website/main/assets/pteranodon.jpg" 
+         alt="Pteranodon" class="w-full h-full object-cover">
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+      <h3 class="text-white text-xl font-bold">Pteranodon</h3>
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-3">
+      <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded">Late Cretaceous</span>
+      <span class="text-gray-500 text-sm"><i class="fas fa-ruler-combined mr-1"></i> 6m wingspan</span>
+    </div>
+    <p class="text-gray-700 mb-4">This flying reptile had a wingspan of up to 6 meters and a distinctive backward-pointing crest on its head.</p>
+    <div class="flex justify-between items-center">
+      <div>
+        <span class="text-gray-500 text-sm"><i class="fas fa-weight-hanging mr-1"></i> 20-25 kg</span>
+      </div>
+      <a href="fossil-details.html?dino=pteranodon" class="text-amber-600 hover:text-amber-800 font-medium">
+        Learn More <i class="fas fa-arrow-right ml-1"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Fossil Card 5 -->
+<div class="fossil-card bg-white rounded-lg overflow-hidden border border-gray-200">
+  <div class="relative h-64 overflow-hidden">
+    <img src="https://raw.githubusercontent.com/Galpinalpito/dino-website/main/assets/stegosaurus.jpg" 
+         alt="Stegosaurus" class="w-full h-full object-cover">
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+      <h3 class="text-white text-xl font-bold">Stegosaurus</h3>
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-3">
+      <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded">Late Jurassic</span>
+      <span class="text-gray-500 text-sm"><i class="fas fa-ruler-combined mr-1"></i> 9m long</span>
+    </div>
+    <p class="text-gray-700 mb-4">Known for its distinctive double row of kite-shaped plates along its back and four spikes on its tail for defense.</p>
+    <div class="flex justify-between items-center">
+      <div>
+        <span class="text-gray-500 text-sm"><i class="fas fa-weight-hanging mr-1"></i> 5-7 tons</span>
+      </div>
+      <a href="fossil-details.html?dino=stegosaurus" class="text-amber-600 hover:text-amber-800 font-medium">
+        Learn More <i class="fas fa-arrow-right ml-1"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Fossil Card 6 -->
+<div class="fossil-card bg-white rounded-lg overflow-hidden border border-gray-200">
+  <div class="relative h-64 overflow-hidden">
+    <img src="https://raw.githubusercontent.com/Galpinalpito/dino-website/main/assets/sabertooth.jpg" 
+         alt="Saber-toothed Cat" class="w-full h-full object-cover">
+    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black to-transparent p-4">
+      <h3 class="text-white text-xl font-bold">Saber-toothed Cat</h3>
+    </div>
+  </div>
+  <div class="p-6">
+    <div class="flex justify-between items-center mb-3">
+      <span class="bg-amber-100 text-amber-800 text-xs font-semibold px-2.5 py-0.5 rounded">Pleistocene</span>
+      <span class="text-gray-500 text-sm"><i class="fas fa-ruler-combined mr-1"></i> 1.5m long</span>
+    </div>
+    <p class="text-gray-700 mb-4">Famous for its elongated canine teeth, this predator was one of the most iconic mammals of the Ice Age.</p>
+    <div class="flex justify-between items-center">
+      <div>
+        <span class="text-gray-500 text-sm"><i class="fas fa-weight-hanging mr-1"></i> 160-280 kg</span>
+      </div>
+      <a href="fossil-details.html?dino=sabertooth" class="text-amber-600 hover:text-amber-800 font-medium">
+        Learn More <i class="fas fa-arrow-right ml-1"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+            
+            <div class="text-center mt-12">
+                <a href="fossils-gallery.html" class="bg-amber-600 text-white px-4 py-2 rounded hover:bg-amber-700">
+                  View All Fossils
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Geological Timeline -->
+    <section id="timeline" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12 text-amber-900">Geological Timeline</h2>
+            
+            <div class="relative max-w-3xl mx-auto">
+                <!-- Timeline line -->
+                <div class="absolute left-4 md:left-1/2 h-full w-0.5 bg-amber-500 transform -translate-x-1/2"></div>
+                
+                <!-- Timeline Item 1 -->
+                <div class="relative mb-12 pl-12 md:pl-0 md:flex justify-between items-center timeline-item">
+                    <div class="md:w-5/12 md:pr-8 md:text-right mb-4 md:mb-0">
+                        <h3 class="text-xl font-bold text-amber-800">Cambrian Period</h3>
+                        <p class="text-gray-600">541 - 485 million years ago</p>
+                    </div>
+                    <div class="md:w-5/12 bg-white p-6 rounded-lg shadow border border-gray-200">
+                        <p>The "Cambrian Explosion" saw the rapid appearance of most major animal phyla in the fossil record.</p>
+                        <div class="mt-2">
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Trilobites</span>
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded ml-1">Anomalocaris</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div class="relative mb-12 pl-12 md:pl-0 md:flex justify-between items-center timeline-item">
+                    <div class="md:w-5/12 order-last md:pl-8">
+                        <h3 class="text-xl font-bold text-amber-800">Devonian Period</h3>
+                        <p class="text-gray-600">419 - 359 million years ago</p>
+                    </div>
+                    <div class="md:w-5/12 bg-white p-6 rounded-lg shadow border border-gray-200 order-first md:order-none">
+                        <p>Known as the "Age of Fishes," this period saw the diversification of fish and the first amphibians.</p>
+                        <div class="mt-2">
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Dunkleosteus</span>
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded ml-1">Tiktaalik</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div class="relative mb-12 pl-12 md:pl-0 md:flex justify-between items-center timeline-item">
+                    <div class="md:w-5/12 md:pr-8 md:text-right mb-4 md:mb-0">
+                        <h3 class="text-xl font-bold text-amber-800">Jurassic Period</h3>
+                        <p class="text-gray-600">201 - 145 million years ago</p>
+                    </div>
+                    <div class="md:w-5/12 bg-white p-6 rounded-lg shadow border border-gray-200">
+                        <p>The age of giant sauropods and theropods, with the first birds appearing.</p>
+                        <div class="mt-2">
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Brachiosaurus</span>
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded ml-1">Allosaurus</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 4 -->
+                <div class="relative mb-12 pl-12 md:pl-0 md:flex justify-between items-center timeline-item">
+                    <div class="md:w-5/12 order-last md:pl-8">
+                        <h3 class="text-xl font-bold text-amber-800">Cretaceous Period</h3>
+                        <p class="text-gray-600">145 - 66 million years ago</p>
+                    </div>
+                    <div class="md:w-5/12 bg-white p-6 rounded-lg shadow border border-gray-200 order-first md:order-none">
+                        <p>The last period of the Mesozoic, ending with the mass extinction that wiped out non-avian dinosaurs.</p>
+                        <div class="mt-2">
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">T. rex</span>
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded ml-1">Triceratops</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 5 -->
+                <div class="relative pl-12 md:pl-0 md:flex justify-between items-center timeline-item">
+                    <div class="md:w-5/12 md:pr-8 md:text-right mb-4 md:mb-0">
+                        <h3 class="text-xl font-bold text-amber-800">Pleistocene Epoch</h3>
+                        <p class="text-gray-600">2.6 million - 11,700 years ago</p>
+                    </div>
+                    <div class="md:w-5/12 bg-white p-6 rounded-lg shadow border border-gray-200">
+                        <p>The Ice Age with megafauna like mammoths, saber-toothed cats, and giant ground sloths.</p>
+                        <div class="mt-2">
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">Mammoth</span>
+                            <span class="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded ml-1">Smilodon</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <h2 class="text-3xl font-bold text-center mb-8 text-amber-900">About Prehistoric Wonders</h2>
+                <div class="flex flex-col md:flex-row items-center">
+                    <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                        <img src="https://images.unsplash.com/photo-1637858868190-8a7b7b8b8b8b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" 
+                             alt="Paleontologist at work" class="rounded-lg shadow-lg w-full">
+                    </div>
+                    <div class="md:w-1/2">
+                        <p class="text-gray-700 mb-4">
+                            Prehistoric Wonders is dedicated to bringing the fascinating world of paleontology to everyone. 
+                            Our mission is to educate and inspire people about Earth's prehistoric past through detailed 
+                            fossil records and scientific research.
+                        </p>
+                        <p class="text-gray-700 mb-4">
+                            We collaborate with museums, universities, and research institutions worldwide to provide 
+                            accurate and up-to-date information about prehistoric life.
+                        </p>
+                        <p class="text-gray-700 mb-6">
+                            Whether you're a student, educator, or simply curious about ancient life, our resources are 
+                            designed to make paleontology accessible to all.
+                        </p>
+                        <div class="flex space-x-4">
+                            <a href="#" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded transition flex items-center">
+                                <i class="fas fa-book-open mr-2"></i> Resources
+                            </a>
+                            <a href="#" class="border border-amber-600 text-amber-600 hover:bg-amber-50 font-bold py-2 px-4 rounded transition flex items-center">
+                                <i class="fas fa-envelope mr-2"></i> Contact
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-12 bg-amber-900 text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl font-bold mb-4">Stay Updated on Discoveries</h2>
+            <p class="max-w-2xl mx-auto mb-6">Subscribe to our newsletter for the latest fossil discoveries and prehistoric research.</p>
+            <form class="max-w-md mx-auto flex">
+                <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded-l-lg focus:outline-none text-gray-900">
+                <button type="submit" class="bg-amber-600 hover:bg-amber-700 px-6 py-3 rounded-r-lg font-bold transition">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-6 md:mb-0">
+                    <div class="flex items-center space-x-2">
+                        <i class="fas fa-bone text-2xl"></i>
+                        <span class="text-2xl font-bold">Prehistoric<span class="text-amber-300">Wonders</span></span>
+                    </div>
+                    <p class="text-gray-400 mt-2">Exploring Earth's ancient past</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2023 Prehistoric Wonders. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition">Privacy Policy</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition">Terms of Service</a>
+                    <a href="#" class="text-gray-400 hover:text-white text-sm transition">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Chatbot Widget -->
+    <div id="chatbot-container" class="fixed bottom-6 right-6 z-50 hidden">
+        <div id="chatbot-header" class="bg-amber-700 text-white rounded-t-lg px-4 py-3 flex justify-between items-center cursor-pointer">
+            <div class="flex items-center">
+                <i class="fas fa-robot mr-2"></i>
+                <span class="font-bold">Prehistoric AI Assistant</span>
+            </div>
+            <button id="minimize-chatbot" class="text-white hover:text-amber-200">
+                <i class="fas fa-minus"></i>
+            </button>
+        </div>
+        <div id="chatbot-body" class="bg-white border border-gray-200 rounded-b-lg shadow-lg" style="width: 350px; height: 400px;">
+            <div id="chatbot-messages" class="p-4 overflow-y-auto h-80">
+                <div class="chatbot-message mb-4">
+                    <div class="bg-amber-100 text-gray-800 rounded-lg p-3 max-w-xs">
+                        <p>Hello! I'm your prehistoric AI assistant. Ask me anything about fossils, dinosaurs, or ancient life!</p>
+                    </div>
+                </div>
+            </div>
+            <div class="p-3 border-t border-gray-200">
+                <div class="flex">
+                    <input type="text" id="chatbot-input" placeholder="Ask me anything..." 
+                           class="flex-grow px-3 py-2 border border-gray-300 rounded-l-lg focus:outline-none focus:ring-1 focus:ring-amber-500">
+                    <button id="chatbot-send" class="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-r-lg">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Toggle Button -->
+    <button id="chatbot-toggle" class="fixed bottom-6 right-6 bg-amber-600 hover:bg-amber-700 text-white rounded-full p-4 shadow-lg z-50">
+        <i class="fas fa-robot text-xl"></i>
+    </button>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 hidden">
+        <div class="bg-white rounded-lg p-6 w-full max-w-md" data-aos="zoom-in">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold">Login / Sign Up</h3>
+                <button onclick="hideLoginModal()" class="text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <button onclick="signInWithGoogle()" class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded flex items-center justify-center">
+                    <i class="fab fa-google mr-2"></i> Continue with Google
+                </button>
+                <button onclick="signInWithFacebook()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded flex items-center justify-center">
+                    <i class="fab fa-facebook-f mr-2"></i> Continue with Facebook
+                </button>
+                <div class="relative flex items-center py-2">
+                    <div class="flex-grow border-t border-gray-300"></div>
+                    <span class="flex-shrink mx-4 text-gray-500">or</span>
+                    <div class="flex-grow border-t border-gray-300"></div>
+                </div>
+                <form id="emailLoginForm">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Email</label>
+                        <input type="email" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2">Password</label>
+                        <input type="password" required class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-1 focus:ring-amber-500">
+                    </div>
+                    <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white py-2 rounded">
+                        Continue with Email
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+         // Initialize AOS animations
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Login modal functions
+        function showLoginModal() {
+            document.getElementById('loginModal').classList.remove('hidden');
+        }
+
+        function hideLoginModal() {
+            document.getElementById('loginModal').classList.add('hidden');
+        }
+
+        // Social login functions (mock implementations)
+        function signInWithGoogle() {
+            alert('Redirecting to Google login...');
+            // In a real app, you would implement Google OAuth here
+        }
+
+        function signInWithFacebook() {
+            alert('Redirecting to Facebook login...');
+            // In a real app, you would implement Facebook OAuth here
+        }
+
+        // Form submission
+        document.getElementById('emailLoginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Login with email submitted!');
+            hideLoginModal();
+        });
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+        // Chatbot functionality
+        const chatbotToggle = document.getElementById('chatbot-toggle');
+        const chatbotContainer = document.getElementById('chatbot-container');
+        const minimizeChatbot = document.getElementById('minimize-chatbot');
+        const chatbotMessages = document.getElementById('chatbot-messages');
+        const chatbotInput = document.getElementById('chatbot-input');
+        const chatbotSend = document.getElementById('chatbot-send');
+
+        // Toggle chatbot visibility
+        chatbotToggle.addEventListener('click', () => {
+            chatbotContainer.classList.toggle('hidden');
+            chatbotToggle.classList.add('hidden');
+        });
+
+        // Minimize chatbot
+        minimizeChatbot.addEventListener('click', () => {
+            chatbotContainer.classList.add('hidden');
+            chatbotToggle.classList.remove('hidden');
+        });
+
+        // Send message function
+        function sendMessage() {
+            const message = chatbotInput.value.trim();
+            if (message) {
+                // Add user message
+                addMessage(message, 'user');
+                chatbotInput.value = '';
+                
+                // Simulate AI thinking
+                setTimeout(() => {
+                    // Get AI response
+                    const response = getAIResponse(message);
+                    addMessage(response, 'bot');
+                }, 500);
+            }
+        }
+
+        // Add message to chat
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chatbot-message mb-4 flex ${sender === 'user' ? 'justify-end' : 'justify-start'}`;
+            
+            const contentDiv = document.createElement('div');
+            contentDiv.className = sender === 'user' 
+                ? 'bg-amber-600 text-white rounded-lg p-3 max-w-xs'
+                : 'bg-amber-100 text-gray-800 rounded-lg p-3 max-w-xs';
+            contentDiv.textContent = text;
+            
+            messageDiv.appendChild(contentDiv);
+            chatbotMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+        }
+
+        // Simple AI response logic
+        function getAIResponse(message) {
+            const lowerMsg = message.toLowerCase();
+            
+            // Predefined responses
+            if (lowerMsg.includes('hello') || lowerMsg.includes('hi')) {
+                return "Hello! How can I help you with prehistoric knowledge today?";
+            } else if (lowerMsg.includes('tyrannosaurus') || lowerMsg.includes('t-rex')) {
+                return "Tyrannosaurus rex was one of the largest land predators, living about 68-66 million years ago. It could grow up to 12 meters long and weigh 8-14 tons!";
+            } else if (lowerMsg.includes('fossil') || lowerMsg.includes('dig')) {
+                return "Fossils are preserved remains of ancient organisms. The best places to find fossils are sedimentary rock formations from the creature's time period.";
+            } else if (lowerMsg.includes('mammoth')) {
+                return "Woolly mammoths lived during the Pleistocene epoch and were adapted to cold environments with their thick fur and long tusks.";
+            } else if (lowerMsg.includes('extinct') || lowerMsg.includes('die out')) {
+                return "The most famous mass extinction was the Cretaceous-Paleogene event 66 million years ago, likely caused by an asteroid impact that wiped out non-avian dinosaurs.";
+            } else {
+                // For unknown questions, provide a generic response
+                const responses = [
+                    "That's an interesting question about prehistory! While I don't have a specific answer, I can tell you that the Mesozoic era (252-66 million years ago) was when dinosaurs dominated the Earth.",
+                    "Prehistoric life was incredibly diverse! Can you ask me something more specific about ancient creatures or time periods?",
+                    "I'm still learning about all aspects of prehistoric life. Maybe you could ask me about specific dinosaurs, fossils, or geological periods?",
+                    "The study of prehistoric life is called paleontology. Would you like to know more about how fossils are formed or discovered?"
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+        }
+
+        // Event listeners
+        chatbotSend.addEventListener('click', sendMessage);
+        chatbotInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendMessage();
+        });
+    </script>
+</body>
+</html>
