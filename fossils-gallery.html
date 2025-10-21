@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Fossils Gallery</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+body {
+  background: radial-gradient(circle at top, #0a0a0a 0%, #000 100%);
+  color: #e5e5e5;
+  font-family: "Poppins", sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar melengkung + efek glass */
+nav {
+  background: rgba(168, 85, 247, 0.1);
+  border-bottom: 1px solid rgba(168,85,247,0.3);
+  backdrop-filter: blur(12px);
+  border-radius: 0 0 25px 25px;
+  box-shadow: 0 0 15px rgba(168,85,247,0.3);
+}
+nav h1 {
+  color: #c084fc;
+  text-shadow: 0 0 10px rgba(168,85,247,0.5);
+}
+
+/* Judul */
+h2 {
+  color: #a855f7;
+  text-shadow: 0 0 12px rgba(168,85,247,0.3);
+}
+
+/* Kartu fosil glowing */
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(168,85,247,0.2);
+  border-radius: 20px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(168,85,247,0.1);
+}
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 25px rgba(168,85,247,0.4);
+}
+
+/* Gambar dalam kartu */
+.card img {
+  height: 200px;
+  object-fit: cover;
+  width: 100%;
+}
+
+/* Deskripsi */
+.card h3 {
+  color: #e9d5ff;
+  font-weight: bold;
+}
+.card p {
+  color: #bda6f2;
+  font-size: 0.9rem;
+}
+
+/* Tombol Learn More */
+.card a {
+  color: #a855f7;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+.card a:hover {
+  color: #d8b4fe;
+  text-shadow: 0 0 8px rgba(216,180,254,0.4);
+}
+
+/* Container layout */
+.container {
+  padding: 2rem;
+  max-width: 1200px;
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="p-4">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-xl font-bold">🦴 Fossil Museum</h1>
+      <a href="dino.html" class="hover:underline text-purple-300">⬅ Kembali</a>
+    </div>
+  </nav>
+
+  <div class="container mx-auto">
+    <h2 class="text-3xl font-bold mb-8 text-center">🪶 All Fossils</h2>
+
+    <div id="fossilsGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+  </div>
+
+  <script>
+  // Daftar hewan purba lainnya (20 contoh)
+  const fossils = [
+    {
+      key: "plesiosaurus",
+      title: "Plesiosaurus",
+      img: "assets/plesiosaurus.jpg",
+      desc: "Dinosaurus laut dengan leher panjang dan sirip besar."
+    },
+    {
+      key: "ichthyosaurus",
+      title: "Ichthyosaurus",
+      img: "assets/ichthyosaurus.jpg",
+      desc: "Dinosaurus laut mirip ikan modern, hidup di zaman Jura."
+    },
+    {
+      key: "dimetrodon",
+      title: "Dimetrodon",
+      img: "assets/dimetrodon.jpg",
+      desc: "Reptil pra-dinosaurus dengan sirip punggung yang besar."
+    },
+    {
+      key: "spinosaurus",
+      title: "Spinosaurus",
+      img: "assets/spinosaurus.jpg",
+      desc: "Predator raksasa yang hidup di sungai dan rawa."
+    },
+    {
+      key: "mosasaurus",
+      title: "Mosasaurus",
+      img: "assets/mosasaurus.jpg",
+      desc: "Reptil laut pemangsa besar di zaman Kapur."
+    },
+    {
+      key: "pterodactyl",
+      title: "Pterodactyl",
+      img: "assets/pterodactyl.jpg",
+      desc: "Reptil terbang kecil dari zaman Kapur."
+    },
+    {
+      key: "dunkleosteus",
+      title: "Dunkleosteus",
+      img: "assets/dunkleosteus.jpg",
+      desc: "Ikan predator raksasa dari zaman Devon."
+    },
+    {
+      key: "ankylosaurus",
+      title: "Ankylosaurus",
+      img: "assets/ankylosaurus.jpg",
+      desc: "Dinosaurus darat bersisik dengan ekor palu."
+    },
+    {
+      key: "plesioteuthis",
+      title: "Plesioteuthis",
+      img: "assets/plesioteuthis.jpg",
+      desc: "Cumi-cumi purba dari zaman Jura."
+    },
+    {
+      key: "giganotosaurus",
+      title: "Giganotosaurus",
+      img: "assets/giganotosaurus.jpg",
+      desc: "Dinosaurus karnivora raksasa dari Argentina."
+    },
+    {
+      key: "plesiophoca",
+      title: "Plesiophoca",
+      img: "assets/plesiophoca.jpg",
+      desc: "Anjing laut purba dari zaman Pleistosen."
+    },
+    {
+      key: "heliocanthus",
+      title: "Heliocanthus",
+      img: "assets/heliocanthus.jpg",
+      desc: "Ikan purba dengan sirip yang khas."
+    },
+    {
+      key: "oceanosaurus",
+      title: "Oceanosaurus",
+      img: "assets/oceanosaurus.jpg",
+      desc: "Dinosaurus laut herbivora besar."
+    },
+    {
+      key: "quetzalcoatlus",
+      title: "Quetzalcoatlus",
+      img: "assets/quetzalcoatlus.jpg",
+      desc: "Burung reptil raksasa terbang dari zaman Kapur."
+    },
+    {
+      key: "archelon",
+      title: "Archelon",
+      img: "assets/archelon.jpg",
+      desc: "Penyu raksasa dari zaman Kapur."
+    },
+    {
+      key: "dimorphodon",
+      title: "Dimorphodon",
+      img: "assets/dimorphodon.jpg",
+      desc: "Pterosaurus kecil dengan sayap lebar."
+    },
+    {
+      key: "basilosaurus",
+      title: "Basilosaurus",
+      img: "assets/basilosaurus.jpg",
+      desc: "Paus purba raksasa dari zaman Eosen."
+    },
+    {
+      key: "shonisaurus",
+      title: "Shonisaurus",
+      img: "assets/shonisaurus.jpg",
+      desc: "Ichthyosaurus raksasa dari zaman Trias."
+    },
+    {
+      key: "mei",
+      title: "Mei",
+      img: "assets/mei.jpg",
+      desc: "Dinosaurus kecil dari Cina yang ditemukan dalam posisi tidur."
+    },
+    {
+      key: "dreadnoughtus",
+      title: "Dreadnoughtus",
+      img: "assets/dreadnoughtus.jpg",
+      desc: "Salah satu dinosaurus darat terbesar yang pernah ditemukan."
+    }
+  ];
+
+    // Render grid
+    const grid = document.getElementById('fossilsGrid');
+    fossils.forEach(f => {
+      const card = document.createElement('div');
+      card.className = "bg-white rounded-lg shadow-md overflow-hidden";
+      card.innerHTML = `
+        <img src="${f.img}" alt="${f.title}" class="w-full h-48 object-cover">
+        <div class="p-4">
+          <h3 class="font-bold text-lg mb-2">${f.title}</h3>
+          <p class="text-gray-600 text-sm mb-2">${f.desc}</p>
+          <a href="fossil-details.html?dino=${f.key}" class="text-amber-600 hover:text-amber-800 font-medium">
+            Learn More ➜
+          </a>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  </script>
+</body>
+</html>
