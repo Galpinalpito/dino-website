@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fossil Details</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <style>
+body {
+  background: radial-gradient(circle at top, #0d0d0d 0%, #000 100%);
+  color: #e7e7e7;
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+nav {
+  background: rgba(168, 85, 247, 0.1);
+  border-bottom: 1px solid rgba(168,85,247,0.3);
+  backdrop-filter: blur(10px);
+}
+
+nav h1 {
+  color: #a855f7;
+  text-shadow: 0 0 10px rgba(168,85,247,0.5);
+}
+
+a {
+  color: #a855f7;
+}
+
+h2, h3 {
+  color: #a855f7;
+  text-shadow: 0 0 10px rgba(168,85,247,0.3);
+}
+
+.container {
+  padding: 2rem;
+  max-width: 900px;
+}
+
+.card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: 0 0 15px rgba(168,85,247,0.1);
+  transition: 0.3s ease;
+  margin-bottom: 25px;
+}
+.card:hover {
+  box-shadow: 0 0 25px rgba(168,85,247,0.4);
+  transform: translateY(-5px);
+}
+
+img {
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(168,85,247,0.2);
+}
+
+.back-btn {
+  display: inline-block;
+  padding: 12px 30px;
+  background: rgba(168, 85, 247, 0.1);
+  color: #a855f7;
+  border-radius: 10px;
+  border: 1px solid rgba(168,85,247,0.3);
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: rgba(168,85,247,0.2);
+  box-shadow: 0 0 15px rgba(168,85,247,0.3);
+  transform: translateY(-3px);
+}
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="p-4">
+  <div class="container mx-auto flex justify-between items-center">
+    <h1 class="text-xl font-bold text-purple-400">🦴 Fossil Detail</h1>
+    <a href="fossils-gallery.html" class="hover:underline text-purple-300">⬅ Kembali ke Galeri</a>
+  </div>
+</nav>
+  <!-- Konten -->
+  <div class="container mx-auto p-6">
+    <h2 id="title" class="text-3xl font-bold mb-4">Judul Fosil</h2>
+
+    <div class="mb-6 text-center">
+      <img id="img-main" src="" alt="Fosil" class="w-full max-w-2xl mx-auto">
+    </div>
+
+    <div class="card">
+      <h3 class="text-2xl font-semibold mb-4">Spesifikasi Fosil</h3>
+      <ul id="specs" class="list-disc list-inside space-y-2"></ul>
+    </div>
+
+    <div class="card">
+      <h3 class="text-2xl font-semibold mb-4">Deskripsi</h3>
+      <p id="description" class="leading-relaxed"></p>
+    </div>
+
+    <div class="card">
+      <h3 class="text-2xl font-semibold mb-4">Foto Fosil Tambahan</h3>
+      <div id="gallery" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+    </div>
+  </div>
+
+
+  <script>
+const params = new URLSearchParams(window.location.search);
+const dino = params.get('dino');
+
+const dinos = {
+  trex: {
+    title: "Tyrannosaurus Rex",
+    img: "assets/trex.jpg",
+    specs: [
+      "Nama Ilmiah: Tyrannosaurus rex",
+      "Era Hidup: Kapur Akhir (68–66 juta tahun lalu)",
+      "Panjang Tubuh: ± 12 meter",
+      "Berat: 8–14 ton",
+      "Habitat: Amerika Utara",
+      "Ciri Unik: Predator darat terbesar dengan gigitan super kuat"
+    ],
+    desc: "Tyrannosaurus rex, sering disebut T-Rex, adalah salah satu dinosaurus paling ikonik. Fosil menunjukkan T-Rex memiliki tengkorak besar, gigi tajam, dan rahang kuat yang mampu menghancurkan tulang.",
+    gallery: [
+      "assets/trex_gallery1.jpg",
+      "assets/trex_gallery2.jpg",
+      "assets/trex_gallery3.jpg"
+    ]
+  },
+
+  sabertooth: {
+    title: "Saber-Tooth Cat",
+    img: "assets/sabertooth.jpg",
+    specs: [
+      "Nama Ilmiah: Smilodon fatalis",
+      "Era Hidup: Pleistosen (sekitar 2,5 juta – 10 ribu tahun lalu)",
+      "Panjang Tubuh: ± 2 meter",
+      "Berat: 160 – 280 kg",
+      "Habitat: Amerika Utara & Selatan",
+      "Ciri Unik: Gigi taring panjang hingga 18 cm"
+    ],
+    desc: "Smilodon, atau yang lebih dikenal sebagai Saber-Tooth Cat, adalah predator paling terkenal dari zaman es. Fosil Smilodon banyak ditemukan di La Brea Tar Pits, Los Angeles.",
+    gallery: [
+      "assets/sabertooth_gallery1.jpg",
+      "assets/sabertooth_gallery2.jpg",
+      "assets/sabertooth_gallery3.jpg"
+    ]
+  },
+
+  triceratops: {
+    title: "Triceratops",
+    img: "assets/triceratops.jpg",
+    specs: [
+      "Nama Ilmiah: Triceratops horridus",
+      "Era Hidup: Kapur Akhir (68–66 juta tahun lalu)",
+      "Panjang Tubuh: ± 9 meter",
+      "Berat: 6–12 ton",
+      "Habitat: Amerika Utara",
+      "Ciri Unik: Tiga tanduk dan perisai besar di kepala"
+    ],
+    desc: "Triceratops adalah dinosaurus herbivora terkenal dengan tiga tanduk dan frill besar di kepalanya, kemungkinan digunakan untuk pertahanan dan ritual kawin.",
+    gallery: [
+      "assets/triceratops_gallery1.jpg",
+      "assets/triceratops_gallery2.jpg",
+      "assets/triceratops_gallery3.jpg"
+    ]
+  },
+
+  pteranodon: {
+    title: "Pteranodon",
+    img: "assets/pteranodon.jpg",
+    specs: [
+      "Nama Ilmiah: Pteranodon longiceps",
+      "Era Hidup: Kapur Akhir (70–100 juta tahun lalu)",
+      "Wingspan: ± 6 meter",
+      "Berat: 20–25 kg",
+      "Habitat: Amerika Utara",
+      "Ciri Unik: Reptil terbang dengan puncak kepala mundur"
+    ],
+    desc: "Pteranodon adalah reptil terbang besar dengan sayap hingga 6 meter dan ciri khas puncak kepala yang mundur.",
+    gallery: [
+      "assets/pteranodon_gallery1.jpg",
+      "assets/pteranodon_gallery2.jpg",
+      "assets/pteranodon_gallery3.jpg"
+    ]
+  },
+
+  stegosaurus: {
+    title: "Stegosaurus",
+    img: "assets/stegosaurus.jpg",
+    specs: [
+      "Nama Ilmiah: Stegosaurus stenops",
+      "Era Hidup: Jura Akhir (155–150 juta tahun lalu)",
+      "Panjang Tubuh: ± 9 meter",
+      "Berat: 5–7 ton",
+      "Habitat: Amerika Utara",
+      "Ciri Unik: Plat tulang di punggung dan 4 duri ekor"
+    ],
+    desc: "Stegosaurus terkenal dengan plat berbentuk layang-layang di punggungnya dan duri di ekor untuk pertahanan.",
+    gallery: [
+      "assets/stegosaurus_gallery1.jpg",
+      "assets/stegosaurus_gallery2.jpg",
+      "assets/stegosaurus_gallery3.jpg"
+    ]
+  },
+
+  mammoth: {
+    title: "Woolly Mammoth",
+    img: "assets/mammoth.jpg",
+    specs: [
+      "Nama Ilmiah: Mammuthus primigenius",
+      "Era Hidup: Pleistosen (sekitar 400 ribu – 4 ribu tahun lalu)",
+      "Tinggi: ± 3,5 meter",
+      "Berat: 6–8 ton",
+      "Habitat: Eurasia & Amerika Utara",
+      "Ciri Unik: Lapisan bulu tebal dan taring panjang"
+    ],
+    desc: "Woolly Mammoth hidup di lingkungan dingin dan terkenal dengan taring panjangnya. Banyak fosil ditemukan di Siberia dan Amerika Utara.",
+    gallery: [
+      "assets/mammoth_gallery1.jpg",
+      "assets/mammoth_gallery2.jpg",
+      "assets/mammoth_gallery3.jpg"
+    ]
+  },
+
+  plesiosaurus: {
+    title: "Plesiosaurus",
+    img: "assets/plesiosaurus.jpg",
+    specs: [
+      "Nama Ilmiah: Plesiosaurus",
+      "Era Hidup: Jura",
+      "Panjang Tubuh: ± 4 meter",
+      "Habitat: Laut",
+      "Ciri Unik: Leher panjang"
+    ],
+    desc: "Dinosaurus laut dengan leher panjang dan sirip besar.",
+    gallery: [
+      "assets/plesiosaurus_gallery1.jpg"
+    ]
+  },
+
+  ichthyosaurus: {
+    title: "Ichthyosaurus",
+    img: "assets/ichthyosaurus.jpg",
+    specs: [
+      "Nama Ilmiah: Ichthyosaurus",
+      "Era Hidup: Jura",
+      "Panjang Tubuh: ± 3 meter",
+      "Habitat: Laut",
+      "Ciri Unik: Mirip ikan"
+    ],
+    desc: "Dinosaurus laut mirip ikan modern, hidup di zaman Jura.",
+    gallery: [
+      "assets/ichthyosaurus_gallery1.jpg"
+    ]
+  },
+
+  dimetrodon: {
+    title: "Dimetrodon",
+    img: "assets/dimetrodon.jpg",
+    specs: [
+      "Nama Ilmiah: Dimetrodon",
+      "Era Hidup: Permian",
+      "Panjang Tubuh: ± 4 meter",
+      "Habitat: Darat",
+      "Ciri Unik: Sirip punggung besar"
+    ],
+    desc: "Reptil pra-dinosaurus dengan sirip punggung yang besar.",
+    gallery: [
+      "assets/dimetrodon_gallery1.jpg"
+    ]
+  },
+
+  spinosaurus: {
+    title: "Spinosaurus",
+    img: "assets/spinosaurus.jpg",
+    specs: [
+      "Nama Ilmiah: Spinosaurus aegyptiacus",
+      "Era Hidup: Kapur",
+      "Panjang Tubuh: ± 15 meter",
+      "Habitat: Sungai & rawa",
+      "Ciri Unik: Sirip punggung mirip layar"
+    ],
+    desc: "Predator raksasa yang hidup di sungai dan rawa.",
+    gallery: [
+      "assets/spinosaurus_gallery1.jpg"
+    ]
+  },
+
+  mosasaurus: {
+    title: "Mosasaurus",
+    img: "assets/mosasaurus.jpg",
+    specs: [
+      "Nama Ilmiah: Mosasaurus",
+      "Era Hidup: Kapur",
+      "Panjang Tubuh: ± 17 meter",
+      "Habitat: Laut",
+      "Ciri Unik: Predator laut besar"
+    ],
+    desc: "Reptil laut pemangsa besar di zaman Kapur.",
+    gallery: [
+      "assets/mosasaurus_gallery1.jpg"
+    ]
+  },
+
+  pterodactyl: {
+    title: "Pterodactyl",
+    img: "assets/pterodactyl.jpg",
+    specs: [
+      "Nama Ilmiah: Pterodactylus",
+      "Era Hidup: Kapur",
+      "Panjang Tubuh: ± 1 meter",
+      "Habitat: Udara",
+      "Ciri Unik: Reptil terbang kecil"
+    ],
+    desc: "Reptil terbang kecil dari zaman Kapur.",
+    gallery: [
+      "assets/pterodactyl_gallery1.jpg"
+    ]
+  },
+
+  dunkleosteus: {
+    title: "Dunkleosteus",
+    img: "assets/dunkleosteus.jpg",
+    specs: [
+      "Nama Ilmiah: Dunkleosteus",
+      "Era Hidup: Devon",
+      "Panjang Tubuh: ± 10 meter",
+      "Habitat: Laut",
+      "Ciri Unik: Rahang super kuat"
+    ],
+    desc: "Ikan predator raksasa dari zaman Devon.",
+    gallery: [
+      "assets/dunkleosteus_gallery1.jpg"
+    ]
+  },
+
+  ankylosaurus: {
+    title: "Ankylosaurus",
+    img: "assets/ankylosaurus.jpg",
+    specs: [
+      "Nama Ilmiah: Ankylosaurus",
+      "Era Hidup: Kapur",
+      "Panjang Tubuh: ± 8 meter",
+      "Habitat: Darat",
+      "Ciri Unik: Ekor berbentuk palu"
+    ],
+    desc: "Dinosaurus darat bersisik dengan ekor palu.",
+    gallery: [
+      "assets/ankylosaurus_gallery1.jpg"
+    ]
+  },
+};
+
+
+    // Isi konten berdasarkan dinosaurus
+    if(dino && dinos[dino]){
+      const data = dinos[dino];
+      document.getElementById('title').textContent = data.title;
+      document.getElementById('img-main').src = data.img;
+      document.getElementById('description').textContent = data.desc;
+
+      const specsList = document.getElementById('specs');
+      specsList.innerHTML = "";
+      data.specs.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        specsList.appendChild(li);
+      });
+
+      const galleryDiv = document.getElementById('gallery');
+      galleryDiv.innerHTML = "";
+      data.gallery.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = "Fosil " + data.title;
+                img.className = "rounded-lg shadow-md";
+        galleryDiv.appendChild(img);
+      });
+    } else {
+      // Kalau query string salah atau kosong
+      document.getElementById('title').textContent = "Dinosaurus Tidak Ditemukan";
+      document.getElementById('img-main').style.display = "none";
+      document.getElementById('description').textContent = "Maaf, dinosaurus yang dimaksud tidak tersedia.";
+      document.getElementById('specs').innerHTML = "";
+      document.getElementById('gallery').innerHTML = "";
+    }
+  </script>
+</body>
+</html>
